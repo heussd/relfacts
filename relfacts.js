@@ -1,12 +1,21 @@
+function format_number(number) {
+  if(number > 3) return number.toFixed(0);
+  else if(number > 0.5) return number.toFixed(1);
+  else if(number > 0.05) return number.toFixed(2);
+  return number;
+}
+
 function yyyyear_replacer(match, YYYY, offset, string){
   var options = "<option>" + match + "</option>";
-  options += "<option>vor " + (new Date().getFullYear() - YYYY) + " Jahren </option>";
+  options += "<option>vor " + format_number(new Date().getFullYear() - YYYY) + " Jahren </option>";
   return "<select>" + options + "</select>";
 }
 function watt_replacer(match, watt, offset, string){
   var options = "<option>" + match + "</option>";
-  options += "<option>" + (watt / 30) + " Glühbirnen</option>";
-  options += "<option>" + (watt / 1000000) + " Atomkraftwerke</option>";
+  options += "<option>" + format_number(watt / 30) + " Glühbirnen</option>";
+
+  // https://www.ndr.de/nachrichten/Watt-Das-leisten-die-Anlagen-im-Vergleich,watt250.html
+  options += "<option>" + format_number(watt / 1400000000) + " Atomkraftwerke</option>";
   return "<select>" + options + "</select>";
 }
 function megawatt_replacer(match, watt, offset, string){
